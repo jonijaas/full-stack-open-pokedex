@@ -3,14 +3,14 @@ name: Testing stuff
 on:
   push:
     branches:
-     - main
+     - master
 
 jobs:
   a_test_job:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
-      - name: github context
+      - name: gihub context
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: echo "$GITHUB_CONTEXT"
