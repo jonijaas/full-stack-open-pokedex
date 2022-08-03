@@ -39,3 +39,4 @@ jobs:
           healthcheck: "https://damp-brook-37876.herokuapp.com/health"
           checkstring: "ok"
           rollbackonhealthcheckfailed: true
+        if: ${{ github.event_name == 'push' }}
