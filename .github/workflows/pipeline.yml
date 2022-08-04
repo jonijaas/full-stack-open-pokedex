@@ -40,22 +40,22 @@ jobs:
           checkstring: "ok"
           rollbackonhealthcheckfailed: true
         if: ${{ github.event_name == 'push' && contains(join(github.event.commits.*.message, ', '), '#skip') == false }}
-      #- name: Succesful deployment
-      #  uses: rjstone/discord-webhook-notify@v1
-      #  if: ${{ github.event_name == 'push' && contains(join(github.event.commits.*.message, ', '), '#skip') == false && success() }}
-      #  with:
-      #    severity: info
-      #    text: A new version of Pokedex deployed
-      #    details: Deploy succeeded.
-      #    webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-      #- name: Build Failure
-      #  uses: rjstone/discord-webhook-notify@v1
-      #  if: ${{ github.event_name == 'push' && contains(join(github.event.commits.*.message, ', '), '#skip') == false && failure() }}
-      #  with:
-      #    severity: error
-      #    text: Build failed
-      #    details: Commit ${{ github.event.head_commit.url }} by ${{ github.event.head_commit.author.username }} broke the build.
-      #    webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+      - name: Succesful deployment
+        uses: rjstone/discord-webhook-notify@v1
+        if: ${{ github.event_name == 'push' && contains(join(github.event.commits.*.message, ', '), '#skip') == false && success() }}
+        with:
+          severity: info
+          text: A new version of Pokedex deployed
+          details: Deploy succeeded.
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+      - name: Build Failure
+        uses: rjstone/discord-webhook-notify@v1
+        if: ${{ github.event_name == 'push' && contains(join(github.event.commits.*.message, ', '), '#skip') == false && failure() }}
+        with:
+          severity: error
+          text: Build failed
+          details: Commit ${{ github.event.head_commit.url }} by ${{ github.event.head_commit.author.username }} broke the build.
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
 
   tag_release:
     needs: [simple_deployment_pipeline]
